@@ -309,7 +309,7 @@ select option{background:#1a1035;}
       <div class="cg">
         <label id="T_ll">&#10022; Spread Layout</label>
         <div class="sw"><select id="sl" onchange="onLC()">
-          <option value="single">Single Card</option>
+          <option value="single" id="jn_opt_single">Single Card</option>
           <option value="three_ppp">Three Card &#8212; Past &#183; Present &#183; Future</option>
           <option value="three_smc">Three Card &#8212; Situation &#183; Message &#183; Outcome</option>
           <option value="three_mbo">Three Card &#8212; Mind &#183; Body &#183; Spirit</option>
@@ -436,14 +436,14 @@ select option{background:#1a1035;}
         </div>
       </div>
       <div class="jn-search-row">
-        <input class="jn-search" id="jn_search" placeholder="Search readings by card, question, tag&#8230;" oninput="jnSearch()">
+        <input class="jn-search" id="jn_search" placeholder="Search readings by card, question, tag&#8230;" id="jn_search" oninput="jnSearch()">
         <div class="jn-filter-sw"><select class="jn-filter" id="jn_filter_client" onchange="jnSearch()"><option value="">All Clients</option></select></div>
         <div class="jn-filter-sw"><select class="jn-filter" id="jn_filter_spread" onchange="jnSearch()">
-          <option value="">All Spreads</option>
-          <option value="single">Single Card</option><option value="three_ppp">Past/Present/Future</option>
-          <option value="three_smc">Situation/Message/Outcome</option><option value="three_mbo">Mind/Body/Spirit</option>
-          <option value="celtic">Celtic Cross</option><option value="horseshoe">Horseshoe</option>
-          <option value="love">Relationship</option><option value="year">Year Ahead</option><option value="custom">Custom</option>
+          <option value="" id="jn_opt_all_spreads">All Spreads</option>
+          <option value="single">Single Card</option><option value="three_ppp" id="jn_opt_ppp">Past/Present/Future</option>
+          <option value="three_smc" id="jn_opt_smc">Situation/Message/Outcome</option><option value="three_mbo" id="jn_opt_mbo">Mind/Body/Spirit</option>
+          <option value="celtic" id="jn_opt_celtic">Celtic Cross</option><option value="horseshoe" id="jn_opt_horseshoe">Horseshoe</option>
+          <option value="love" id="jn_opt_love">Relationship</option><option value="year" id="jn_opt_year">Year Ahead</option><option value="custom" id="jn_opt_custom">Custom</option>
         </select></div>
       </div>
       <div class="jn-dash-grid">
@@ -454,34 +454,34 @@ select option{background:#1a1035;}
           </div>
           <div id="jn_new_client_form" style="display:none;margin-bottom:8px;">
             <div class="jn-new-client-row">
-              <input type="text" id="jn_new_client_name" placeholder="Client name&#8230;" onkeydown="if(event.key==='Enter')jnCreateClient()">
-              <button class="btn-sm btn-success" onclick="jnCreateClient()" id="jn_btn_add_client" style="padding:6px 12px;white-space:nowrap;">&#10003; Add</button>
+              <input type="text" id="jn_new_client_name" placeholder="Client name&#8230;" id="jn_inp_client_name" onkeydown="if(event.key==='Enter')jnCreateClient()">
+              <button class="btn-sm btn-success" onclick="jnCreateClient()" id="jn_btn_add_client" style="padding:6px 12px;white-space:nowrap;" id="jn_btn_add">&#10003; Add</button>
             </div>
-            <input type="text" id="jn_new_client_notes" placeholder="Notes (optional)&#8230;" style="width:100%;background:rgba(13,8,32,.85);border:1px solid rgba(201,168,76,.3);border-radius:7px;color:var(--tx);font-family:'Crimson Text',serif;font-size:.88rem;padding:6px 10px;margin-bottom:6px;">
+            <input type="text" id="jn_new_client_notes" placeholder="Notes (optional)&#8230;" id="jn_inp_client_notes" style="width:100%;background:rgba(13,8,32,.85);border:1px solid rgba(201,168,76,.3);border-radius:7px;color:var(--tx);font-family:'Crimson Text',serif;font-size:.88rem;padding:6px 10px;margin-bottom:6px;">
           </div>
-          <div id="jn_client_list"><div class="jn-empty"><div class="jn-es">&#128100;</div><p>No clients yet.<br>Add one to get started.</p></div></div>
+          <div id="jn_client_list"><div class="jn-empty"><div class="jn-es">&#128100;</div><p id="jn_txt_no_clients">No clients yet.<br>Add one to get started.</p></div></div>
         </div>
         <div class="jn-main-area">
-          <div id="jn_readings_area"><div class="jn-empty"><div class="jn-es">&#128214;</div><p>Select a client to view readings,<br>or search across all readings above.</p></div></div>
+          <div id="jn_readings_area"><div class="jn-empty"><div class="jn-es">&#128214;</div><p id="jn_txt_select_dash">Select a client to view readings,<br>or search across all readings above.</p></div></div>
         </div>
       </div>
     </div>
   </div>
   <div class="jn-page" id="jnp_detail">
     <div class="bx">
-      <button class="jn-back" onclick="jnShowDash()">&#8592; Back to Journal</button>
+      <button class="jn-back" onclick="jnShowDash()" id="jn_btn_back">&#8592; Back to Journal</button>
       <div class="jn-detail-header">
         <div><div class="jn-detail-title" id="jn_detail_title">Reading</div><div class="jn-detail-meta" id="jn_detail_meta"></div></div>
         <div class="jn-detail-actions">
-          <button class="btn-sm btn-success" onclick="jnSaveDetail()">&#10003; Save Notes</button>
-          <button class="btn-sm btn-danger" onclick="jnDeleteReading()">&#10005; Delete</button>
+          <button class="btn-sm btn-success" onclick="jnSaveDetail()" id="jn_btn_save_notes">&#10003; Save Notes</button>
+          <button class="btn-sm btn-danger" onclick="jnDeleteReading()" id="jn_btn_delete">&#10005; Delete</button>
         </div>
       </div>
       <div class="jn-stats" id="jn_detail_stats"></div>
-      <div class="jn-section"><div class="jn-section-label">Cards Pulled</div><div class="jn-cards-grid" id="jn_detail_cards"></div></div>
-      <div class="jn-section"><div class="jn-section-label">Question / Intention</div><div id="jn_detail_question" style="font-size:.92rem;color:var(--tx);font-style:italic;line-height:1.6;"></div></div>
-      <div class="jn-section"><div class="jn-section-label">Journal Notes</div><textarea class="jn-notes-area" id="jn_detail_notes" placeholder="Write your reflections&#8230;"></textarea></div>
-      <div class="jn-section"><div class="jn-section-label">Tags</div><input class="jn-tags-input" id="jn_detail_tags" placeholder="love, career, guidance&#8230;"><div class="jn-tags-hint">Comma-separated tags for easy searching</div></div>
+      <div class="jn-section"><div class="jn-section-label" id="jn_lbl_cards_pulled">Cards Pulled</div><div class="jn-cards-grid" id="jn_detail_cards"></div></div>
+      <div class="jn-section"><div class="jn-section-label" id="jn_lbl_question">Question / Intention</div><div id="jn_detail_question" style="font-size:.92rem;color:var(--tx);font-style:italic;line-height:1.6;"></div></div>
+      <div class="jn-section"><div class="jn-section-label" id="jn_lbl_journal_notes">Journal Notes</div><textarea class="jn-notes-area" id="jn_detail_notes" placeholder="Write your reflections&#8230;" id="jn_detail_notes"></textarea></div>
+      <div class="jn-section"><div class="jn-section-label" id="jn_lbl_tags">Tags</div><input class="jn-tags-input" id="jn_detail_tags" placeholder="love, career, guidance&#8230;" id="jn_detail_tags"><div class="jn-tags-hint" id="jn_lbl_tags_hint">Comma-separated tags for easy searching</div></div>
       <input type="hidden" id="jn_detail_id">
     </div>
   </div>
@@ -540,18 +540,18 @@ select option{background:#1a1035;}
 </div>
 <div class="jn-modal-ov" id="jn_save_modal" onclick="jnCloseSaveModalBg(event)">
   <div class="jn-modal">
-    <div class="jn-modal-hdr"><div class="jn-modal-title">&#128214; Save This Reading</div><button class="jn-modal-cl" onclick="jnCloseSaveModal()">&#10005;</button></div>
+    <div class="jn-modal-hdr"><div class="jn-modal-title" id="jn_modal_title">&#128214; Save This Reading</div><button class="jn-modal-cl" onclick="jnCloseSaveModal()">&#10005;</button></div>
     <div class="jn-modal-body">
-      <div class="jn-field"><label>Client / Person</label><select id="jn_save_client"><option value="">&#8212; Select or create below &#8212;</option></select></div>
-      <div style="text-align:center;margin:-4px 0 10px;font-size:.78rem;color:var(--dm);">&#8212; or create new &#8212;</div>
-      <div class="jn-field"><label>New Client Name</label><input type="text" id="jn_save_new_client" placeholder="e.g. Sarah, Personal Readings&#8230;"></div>
+      <div class="jn-field"><label id="jn_lbl_client_person">Client / Person</label><select id="jn_save_client"><option value="">&#8212; Select or create below &#8212;</option></select></div>
+      <div style="text-align:center;margin:-4px 0 10px;font-size:.78rem;color:var(--dm);" id="jn_lbl_or_create">&#8212; or create new &#8212;</div>
+      <div class="jn-field"><label id="jn_lbl_new_client_name">New Client Name</label><input type="text" id="jn_save_new_client" placeholder="e.g. Sarah, Personal Readings&#8230;" id="jn_inp_save_new_client"></div>
       <div class="jn-divider"></div>
-      <div class="jn-field"><label>Question / Intention (optional)</label><input type="text" id="jn_save_question" placeholder="What was the focus of this reading?"></div>
-      <div class="jn-field"><label>Initial Notes (optional)</label><textarea id="jn_save_notes" placeholder="First impressions, key insights&#8230;"></textarea></div>
-      <div class="jn-field"><label>Tags (optional, comma-separated)</label><input type="text" id="jn_save_tags" placeholder="love, career, guidance&#8230;"></div>
+      <div class="jn-field"><label id="jn_lbl_q_optional">Question / Intention (optional)</label><input type="text" id="jn_save_question" placeholder="What was the focus of this reading?" id="jn_inp_save_question"></div>
+      <div class="jn-field"><label id="jn_lbl_notes_optional">Initial Notes (optional)</label><textarea id="jn_save_notes" placeholder="First impressions, key insights&#8230;" id="jn_inp_save_notes"></textarea></div>
+      <div class="jn-field"><label id="jn_lbl_tags_optional">Tags (optional, comma-separated)</label><input type="text" id="jn_save_tags" placeholder="love, career, guidance&#8230;" id="jn_inp_save_tags"></div>
       <div class="jn-modal-footer">
-        <button class="btn-sm btn-danger" onclick="jnCloseSaveModal()">Cancel</button>
-        <button class="btn-sm btn-success" onclick="jnDoSaveReading()">&#10003; Save Reading</button>
+        <button class="btn-sm btn-danger" onclick="jnCloseSaveModal()" id="jn_btn_modal_cancel">Cancel</button>
+        <button class="btn-sm btn-success" onclick="jnDoSaveReading()" id="jn_btn_modal_save">&#10003; Save Reading</button>
       </div>
     </div>
   </div>
@@ -609,6 +609,49 @@ en:{
   jn_spread_three_smc:"Situation / Message / Outcome",jn_spread_three_mbo:"Mind / Body / Spirit",
   jn_spread_celtic:"Celtic Cross",jn_spread_horseshoe:"Horseshoe",
   jn_spread_love:"Relationship Spread",jn_spread_year:"Year Ahead",jn_spread_custom:"Custom Pull",
+  jn_dash_title:"📖 Tarot Journal",
+  jn_export_btn:"↓ Export Journal",
+  jn_import_btn:"↑ Import Journal",
+  jn_all_clients:"All Clients",
+  jn_all_spreads:"All Spreads",
+  jn_search_ph:"Search readings by card, question, tag…",
+  jn_spread_opt_single:"Single Card",
+  jn_spread_opt_ppp:"Past/Present/Future",
+  jn_spread_opt_smc:"Situation/Message/Outcome",
+  jn_spread_opt_mbo:"Mind/Body/Spirit",
+  jn_spread_opt_celtic:"Celtic Cross",
+  jn_spread_opt_horseshoe:"Horseshoe",
+  jn_spread_opt_love:"Relationship",
+  jn_spread_opt_year:"Year Ahead",
+  jn_spread_opt_custom:"Custom",
+  jn_client_name_ph:"Client name…",
+  jn_client_notes_ph:"Notes (optional)…",
+  jn_add_btn:"✓ Add",
+  jn_no_clients_txt:"No clients yet.<br>Add one to get started.",
+  jn_select_dash_txt:"Select a client to view readings,<br>or search across all readings above.",
+  jn_back_btn:"← Back to Journal",
+  jn_save_notes_btn:"✓ Save Notes",
+  jn_delete_btn:"Delete",
+  jn_cards_pulled_lbl:"Cards Pulled",
+  jn_question_lbl:"Question / Intention",
+  jn_journal_notes_lbl:"Journal Notes",
+  jn_notes_ph:"Write your reflections…",
+  jn_tags_lbl:"Tags",
+  jn_tags_ph:"love, career, guidance…",
+  jn_tags_hint_txt:"Comma-separated tags for easy searching",
+  jn_modal_title_txt:"📖 Save This Reading",
+  jn_client_person_lbl:"Client / Person",
+  jn_or_create_txt:"— or create new —",
+  jn_new_client_name_lbl:"New Client Name",
+  jn_new_client_ph:"e.g. Sarah, Personal Readings…",
+  jn_q_optional_lbl:"Question / Intention (optional)",
+  jn_q_ph:"What was the focus of this reading?",
+  jn_notes_optional_lbl:"Initial Notes (optional)",
+  jn_notes_save_ph:"First impressions, key insights…",
+  jn_tags_optional_lbl:"Tags (optional, comma-separated)",
+  jn_tags_save_ph:"love, career, guidance…",
+  jn_cancel_btn:"Cancel",
+  jn_save_reading_btn:"✓ Save Reading",
   lo:{single:"Single Card",three_ppp:"Three Card — Past · Present · Future",three_smc:"Three Card — Situation · Message · Outcome",three_mbo:"Three Card — Mind · Body · Spirit",celtic:"Celtic Cross (10 Cards)",horseshoe:"Horseshoe (7 Cards)",love:"Relationship Spread (5 Cards)",year:"Year Ahead (12 Cards)",custom:"Custom Pull",custom_only:"Custom Cards Only"},
   do:{full:"Full Deck (78 Cards)",major:"Major Arcana Only (22)",minor:"Minor Arcana Only (56)",wands:"Suit of Wands",cups:"Suit of Cups",swords:"Suit of Swords",pentacles:"Suit of Pentacles",custom_only:"Custom Cards Only"},
   ro:{none:"No Reversed Cards",some:"Allow Reversed (33%)",half:"Half Reversed (50%)"},
@@ -664,6 +707,49 @@ ru:{
   jn_spread_three_smc:"Ситуация / Послание / Исход",jn_spread_three_mbo:"Разум / Тело / Дух",
   jn_spread_celtic:"Кельтский крест",jn_spread_horseshoe:"Подкова",
   jn_spread_love:"Расклад на отношения",jn_spread_year:"Год вперёд",jn_spread_custom:"Произвольный расклад",
+  jn_dash_title:"📖 Таро-журнал",
+  jn_export_btn:"↓ Экспорт журнала",
+  jn_import_btn:"↑ Импорт журнала",
+  jn_all_clients:"Все клиенты",
+  jn_all_spreads:"Все расклады",
+  jn_search_ph:"Поиск по карте, вопросу, тегу…",
+  jn_spread_opt_single:"Одна карта",
+  jn_spread_opt_ppp:"Прошлое/Настоящее/Будущее",
+  jn_spread_opt_smc:"Ситуация/Послание/Исход",
+  jn_spread_opt_mbo:"Разум/Тело/Дух",
+  jn_spread_opt_celtic:"Кельтский крест",
+  jn_spread_opt_horseshoe:"Подкова",
+  jn_spread_opt_love:"Отношения",
+  jn_spread_opt_year:"Год вперёд",
+  jn_spread_opt_custom:"Произвольный",
+  jn_client_name_ph:"Имя клиента…",
+  jn_client_notes_ph:"Заметки (необязательно)…",
+  jn_add_btn:"✓ Добавить",
+  jn_no_clients_txt:"Клиентов пока нет.<br>Добавьте первого.",
+  jn_select_dash_txt:"Выберите клиента для просмотра раскладов<br>или используйте поиск выше.",
+  jn_back_btn:"← Назад в журнал",
+  jn_save_notes_btn:"✓ Сохранить заметки",
+  jn_delete_btn:"Удалить",
+  jn_cards_pulled_lbl:"Вытянутые карты",
+  jn_question_lbl:"Вопрос / Намерение",
+  jn_journal_notes_lbl:"Записи журнала",
+  jn_notes_ph:"Запишите свои размышления…",
+  jn_tags_lbl:"Теги",
+  jn_tags_ph:"любовь, карьера, руководство…",
+  jn_tags_hint_txt:"Теги через запятую для удобного поиска",
+  jn_modal_title_txt:"📖 Сохранить расклад",
+  jn_client_person_lbl:"Клиент / Человек",
+  jn_or_create_txt:"— или создайте нового —",
+  jn_new_client_name_lbl:"Имя нового клиента",
+  jn_new_client_ph:"напр.: Сара, Мои расклады…",
+  jn_q_optional_lbl:"Вопрос / Намерение (необязательно)",
+  jn_q_ph:"На чём был сосредоточен этот расклад?",
+  jn_notes_optional_lbl:"Начальные заметки (необязательно)",
+  jn_notes_save_ph:"Первые впечатления, ключевые озарения…",
+  jn_tags_optional_lbl:"Теги (необязательно, через запятую)",
+  jn_tags_save_ph:"любовь, карьера, руководство…",
+  jn_cancel_btn:"Отмена",
+  jn_save_reading_btn:"✓ Сохранить расклад",
   lo:{single:"Одна карта",three_ppp:"Три карты — Прошлое · Настоящее · Будущее",three_smc:"Три карты — Ситуация · Послание · Исход",three_mbo:"Три карты — Разум · Тело · Дух",celtic:"Кельтский крест (10 карт)",horseshoe:"Подкова (7 карт)",love:"Расклад на отношения (5 карт)",year:"Год вперёд (12 карт)",custom:"Произвольный расклад",custom_only:"Только свои карты"},
   do:{full:"Полная колода (78 карт)",major:"Только Старшие Арканы (22)",minor:"Только Младшие Арканы (56)",wands:"Масть Жезлов",cups:"Масть Кубков",swords:"Масть Мечей",pentacles:"Масть Пентаклей",custom_only:"Только свои карты"},
   ro:{none:"Без перевёрнутых",some:"Допустить (33%)",half:"Половина (50%)"},
@@ -682,7 +768,69 @@ var SBG={null:"#1e1545",Wands:"#3d1a00",Cups:"#001a3d",Swords:"#1a1a2e",Pentacle
 var SFG={null:"#c9a84c",Wands:"#e07020",Cups:"#2060c0",Swords:"#8080c0",Pentacles:"#208020"};
 function FB(card,w,h){var s=card.suit_en||null,bg=SBG[s]||"#1e1545",fg=SFG[s]||"#c9a84c";var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+w+' '+h+'"><rect width="'+w+'" height="'+h+'" rx="8" fill="'+bg+'"/><rect x="4" y="4" width="'+(w-8)+'" height="'+(h-8)+'" rx="6" fill="none" stroke="'+fg+'" stroke-width="1.2" opacity="0.5"/><text x="'+(w/2)+'" y="22" text-anchor="middle" font-family="serif" font-size="11" fill="'+fg+'" opacity="0.8">'+(card.number||'')+'</text><text x="'+(w/2)+'" y="'+(h/2+16)+'" text-anchor="middle" font-size="'+(w*0.3)+'" dominant-baseline="middle">'+(card.symbol||'\u2605')+'</text><text x="'+(w/2)+'" y="'+(h-14)+'" text-anchor="middle" font-family="serif" font-size="8" fill="'+fg+'" opacity="0.6" font-style="italic">'+(card.arcana_en||'Custom')+'</text></svg>';return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);}
 function setLang(l){lang=l;G("bEN").classList.toggle("on",l==="en");G("bRU").classList.toggle("on",l==="ru");applyLang();onLC();renderBrowse();renderCustTab();if(reading.length)renderReading();if(ftDeck.length)ftRenderInfo();}
-function applyLang(){var t=TR[lang];var ids={T_title:"title",T_sub:"sub",tab_read:"tab1",tab_flip:"tab2",tab_browse:"tab3",tab_cust:"tab4",tab_journal:"tab5",T_ll:"ll",T_lc:"lc",T_ld:"ld",T_lr:"lr",T_btn:"btn",T_emp:"emp",T_kw:"kw",T_up:"up",T_rv:"rv",T_sy:"sy",T_ad:"ad",T_prev:"prev",T_next:"next",T_ftf:"ftf",T_ftshuffle:"ftshuffle",T_ftreset:"ftreset",T_fthint:"fthint",T_ftph:"ftph",T_cust_edit_title:"cust_edit_title",T_cust_edit_hint:"cust_edit_hint",T_cust_new_title:"cust_new_title",T_cust_new_hint:"cust_new_hint",T_cust_add:"cust_add",T_cust_manage_title:"cust_manage_title",T_cust_export:"cust_export",T_cust_import:"cust_import",T_cust_reset:"cust_reset",T_cust_manage_hint:"cust_manage_hint",T_emod_img_hint:"emod_img_hint",T_emod_upload:"emod_upload",T_emod_remove_img:"emod_remove_img",T_emod_symbol:"emod_symbol",T_emod_cancel:"emod_cancel",T_emod_save:"emod_save"};Object.keys(ids).forEach(function(id){var el=G(id);if(el)el.textContent=t[ids[id]]||TR.en[ids[id]]||'';});G("bsq").placeholder=t.sph;setSel("sl",t.lo);setSel("sd",t.do);setSel("sr",t.ro);setSel("bsf",t.fo);setSel("ft_filter",t.fo);var sb=document.querySelector('.jn-save-btn');if(sb)sb.textContent=tx('jn_save_btn');}
+function applyLang(){var t=TR[lang];var ids={T_title:"title",T_sub:"sub",tab_read:"tab1",tab_flip:"tab2",tab_browse:"tab3",tab_cust:"tab4",tab_journal:"tab5",T_ll:"ll",T_lc:"lc",T_ld:"ld",T_lr:"lr",T_btn:"btn",T_emp:"emp",T_kw:"kw",T_up:"up",T_rv:"rv",T_sy:"sy",T_ad:"ad",T_prev:"prev",T_next:"next",T_ftf:"ftf",T_ftshuffle:"ftshuffle",T_ftreset:"ftreset",T_fthint:"fthint",T_ftph:"ftph",T_cust_edit_title:"cust_edit_title",T_cust_edit_hint:"cust_edit_hint",T_cust_new_title:"cust_new_title",T_cust_new_hint:"cust_new_hint",T_cust_add:"cust_add",T_cust_manage_title:"cust_manage_title",T_cust_export:"cust_export",T_cust_import:"cust_import",T_cust_reset:"cust_reset",T_cust_manage_hint:"cust_manage_hint",T_emod_img_hint:"emod_img_hint",T_emod_upload:"emod_upload",T_emod_remove_img:"emod_remove_img",T_emod_symbol:"emod_symbol",T_emod_cancel:"emod_cancel",T_emod_save:"emod_save"};Object.keys(ids).forEach(function(id){var el=G(id);if(el)el.textContent=t[ids[id]]||TR.en[ids[id]]||'';});G("bsq").placeholder=t.sph;setSel("sl",t.lo);setSel("sd",t.do);setSel("sr",t.ro);setSel("bsf",t.fo);setSel("ft_filter",t.fo);var sb=document.querySelector('.jn-save-btn');if(sb)sb.textContent=tx('jn_save_btn');
+// Update journal static elements
+var jnMap={
+  jn_dash_title:tx('jn_dash_title'),
+  jn_btn_export:tx('jn_export_btn'),
+  jn_btn_import:tx('jn_import_btn'),
+  jn_btn_add:tx('jn_add_btn'),
+  jn_btn_back:tx('jn_back_btn'),
+  jn_btn_save_notes:tx('jn_save_notes_btn'),
+  jn_btn_delete:tx('jn_delete_btn'),
+  jn_lbl_cards_pulled:tx('jn_cards_pulled_lbl'),
+  jn_lbl_question:tx('jn_question_lbl'),
+  jn_lbl_journal_notes:tx('jn_journal_notes_lbl'),
+  jn_lbl_tags:tx('jn_tags_lbl'),
+  jn_lbl_tags_hint:tx('jn_tags_hint_txt'),
+  jn_modal_title:tx('jn_modal_title_txt'),
+  jn_lbl_client_person:tx('jn_client_person_lbl'),
+  jn_lbl_or_create:tx('jn_or_create_txt'),
+  jn_lbl_new_client_name:tx('jn_new_client_name_lbl'),
+  jn_lbl_q_optional:tx('jn_q_optional_lbl'),
+  jn_lbl_notes_optional:tx('jn_notes_optional_lbl'),
+  jn_lbl_tags_optional:tx('jn_tags_optional_lbl'),
+  jn_btn_modal_cancel:tx('jn_cancel_btn'),
+  jn_btn_modal_save:tx('jn_save_reading_btn'),
+  jn_txt_no_clients:tx('jn_no_clients_txt'),
+  jn_txt_select_dash:tx('jn_select_dash_txt')
+};
+Object.keys(jnMap).forEach(function(id){var el=G(id);if(el)el.innerHTML=jnMap[id];});
+// Update placeholders
+var jnPh={
+  jn_search:tx('jn_search_ph'),
+  jn_inp_client_name:tx('jn_client_name_ph'),
+  jn_inp_client_notes:tx('jn_client_notes_ph'),
+  jn_inp_save_new_client:tx('jn_new_client_ph'),
+  jn_inp_save_question:tx('jn_q_ph'),
+  jn_inp_save_notes:tx('jn_notes_save_ph'),
+  jn_inp_save_tags:tx('jn_tags_save_ph'),
+  jn_detail_notes:tx('jn_notes_ph'),
+  jn_detail_tags:tx('jn_tags_ph')
+};
+Object.keys(jnPh).forEach(function(id){var el=G(id);if(el)el.placeholder=jnPh[id];});
+// Update filter dropdowns
+var jnOpts={
+  jn_opt_all_clients:tx('jn_all_clients'),
+  jn_opt_all_spreads:tx('jn_all_spreads'),
+  jn_opt_single:tx('jn_spread_opt_single'),
+  jn_opt_ppp:tx('jn_spread_opt_ppp'),
+  jn_opt_smc:tx('jn_spread_opt_smc'),
+  jn_opt_mbo:tx('jn_spread_opt_mbo'),
+  jn_opt_celtic:tx('jn_spread_opt_celtic'),
+  jn_opt_horseshoe:tx('jn_spread_opt_horseshoe'),
+  jn_opt_love:tx('jn_spread_opt_love'),
+  jn_opt_year:tx('jn_spread_opt_year'),
+  jn_opt_custom:tx('jn_spread_opt_custom')
+};
+Object.keys(jnOpts).forEach(function(id){var el=G(id);if(el)el.textContent=jnOpts[id];});
+// Re-render journal if open
+if(G('pn_journal')&&G('pn_journal').classList.contains('on')){
+  if(G('jnp_dash')&&G('jnp_dash').classList.contains('on')){
+    if(typeof jnLoadClients==='function')jnLoadClients();
+    if(typeof jnSearch==='function')jnSearch();
+  }
+}}
 function setSel(id,map){var s=G(id);if(!s)return;var cur=s.value;Array.from(s.options).forEach(function(o){if(map[o.value]!==undefined)o.textContent=map[o.value];});s.value=cur;}
 function showTab(n){["read","flip","browse","cust","journal"].forEach(function(x){G("pn_"+x).classList.toggle("on",x===n);G("tab_"+x).classList.toggle("on",x===n);});if(n==="browse")renderBrowse();if(n==="flip")ftInit();if(n==="cust")renderCustTab();if(n==="journal")jnOnTabOpen();}
 function onLC(){var v=G("sl").value;G("ldesc").textContent=TR[lang].ld[v]||"";G("cg_cust").style.display=v==="custom"?"block":"none";}
