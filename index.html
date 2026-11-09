@@ -309,7 +309,7 @@ select option{background:#1a1035;}
       <div class="cg">
         <label id="T_ll">&#10022; Spread Layout</label>
         <div class="sw"><select id="sl" onchange="onLC()">
-          <option value="single" id="jn_opt_single">Single Card</option>
+          <option value="single">Single Card</option>
           <option value="three_ppp">Three Card &#8212; Past &#183; Present &#183; Future</option>
           <option value="three_smc">Three Card &#8212; Situation &#183; Message &#183; Outcome</option>
           <option value="three_mbo">Three Card &#8212; Mind &#183; Body &#183; Spirit</option>
@@ -437,10 +437,10 @@ select option{background:#1a1035;}
       </div>
       <div class="jn-search-row">
         <input class="jn-search" id="jn_search" placeholder="Search readings by card, question, tag&#8230;" id="jn_search" oninput="jnSearch()">
-        <div class="jn-filter-sw"><select class="jn-filter" id="jn_filter_client" onchange="jnSearch()"><option value="">All Clients</option></select></div>
+        <div class="jn-filter-sw"><select class="jn-filter" id="jn_filter_client" onchange="jnSearch()"><option value="" id="jn_opt_all_clients">All Clients</option></select></div>
         <div class="jn-filter-sw"><select class="jn-filter" id="jn_filter_spread" onchange="jnSearch()">
           <option value="" id="jn_opt_all_spreads">All Spreads</option>
-          <option value="single">Single Card</option><option value="three_ppp" id="jn_opt_ppp">Past/Present/Future</option>
+          <option value="single" id="jn_opt_single">Single Card</option><option value="three_ppp" id="jn_opt_ppp">Past/Present/Future</option>
           <option value="three_smc" id="jn_opt_smc">Situation/Message/Outcome</option><option value="three_mbo" id="jn_opt_mbo">Mind/Body/Spirit</option>
           <option value="celtic" id="jn_opt_celtic">Celtic Cross</option><option value="horseshoe" id="jn_opt_horseshoe">Horseshoe</option>
           <option value="love" id="jn_opt_love">Relationship</option><option value="year" id="jn_opt_year">Year Ahead</option><option value="custom" id="jn_opt_custom">Custom</option>
@@ -454,10 +454,10 @@ select option{background:#1a1035;}
           </div>
           <div id="jn_new_client_form" style="display:none;margin-bottom:8px;">
             <div class="jn-new-client-row">
-              <input type="text" id="jn_new_client_name" placeholder="Client name&#8230;" id="jn_inp_client_name" onkeydown="if(event.key==='Enter')jnCreateClient()">
-              <button class="btn-sm btn-success" onclick="jnCreateClient()" id="jn_btn_add_client" style="padding:6px 12px;white-space:nowrap;" id="jn_btn_add">&#10003; Add</button>
+              <input type="text" id="jn_new_client_name" placeholder="Client name&#8230;" onkeydown="if(event.key==='Enter')jnCreateClient()">
+              <button class="btn-sm btn-success" onclick="jnCreateClient()" id="jn_btn_add_client" style="padding:6px 12px;white-space:nowrap;">&#10003; Add</button>
             </div>
-            <input type="text" id="jn_new_client_notes" placeholder="Notes (optional)&#8230;" id="jn_inp_client_notes" style="width:100%;background:rgba(13,8,32,.85);border:1px solid rgba(201,168,76,.3);border-radius:7px;color:var(--tx);font-family:'Crimson Text',serif;font-size:.88rem;padding:6px 10px;margin-bottom:6px;">
+            <input type="text" id="jn_new_client_notes" placeholder="Notes (optional)&#8230;" style="width:100%;background:rgba(13,8,32,.85);border:1px solid rgba(201,168,76,.3);border-radius:7px;color:var(--tx);font-family:'Crimson Text',serif;font-size:.88rem;padding:6px 10px;margin-bottom:6px;">
           </div>
           <div id="jn_client_list"><div class="jn-empty"><div class="jn-es">&#128100;</div><p id="jn_txt_no_clients">No clients yet.<br>Add one to get started.</p></div></div>
         </div>
@@ -480,8 +480,8 @@ select option{background:#1a1035;}
       <div class="jn-stats" id="jn_detail_stats"></div>
       <div class="jn-section"><div class="jn-section-label" id="jn_lbl_cards_pulled">Cards Pulled</div><div class="jn-cards-grid" id="jn_detail_cards"></div></div>
       <div class="jn-section"><div class="jn-section-label" id="jn_lbl_question">Question / Intention</div><div id="jn_detail_question" style="font-size:.92rem;color:var(--tx);font-style:italic;line-height:1.6;"></div></div>
-      <div class="jn-section"><div class="jn-section-label" id="jn_lbl_journal_notes">Journal Notes</div><textarea class="jn-notes-area" id="jn_detail_notes" placeholder="Write your reflections&#8230;" id="jn_detail_notes"></textarea></div>
-      <div class="jn-section"><div class="jn-section-label" id="jn_lbl_tags">Tags</div><input class="jn-tags-input" id="jn_detail_tags" placeholder="love, career, guidance&#8230;" id="jn_detail_tags"><div class="jn-tags-hint" id="jn_lbl_tags_hint">Comma-separated tags for easy searching</div></div>
+      <div class="jn-section"><div class="jn-section-label" id="jn_lbl_journal_notes">Journal Notes</div><textarea class="jn-notes-area" id="jn_detail_notes" placeholder="Write your reflections&#8230;"></textarea></div>
+      <div class="jn-section"><div class="jn-section-label" id="jn_lbl_tags">Tags</div><input class="jn-tags-input" id="jn_detail_tags" placeholder="love, career, guidance&#8230;"><div class="jn-tags-hint" id="jn_lbl_tags_hint">Comma-separated tags for easy searching</div></div>
       <input type="hidden" id="jn_detail_id">
     </div>
   </div>
@@ -544,11 +544,11 @@ select option{background:#1a1035;}
     <div class="jn-modal-body">
       <div class="jn-field"><label id="jn_lbl_client_person">Client / Person</label><select id="jn_save_client"><option value="">&#8212; Select or create below &#8212;</option></select></div>
       <div style="text-align:center;margin:-4px 0 10px;font-size:.78rem;color:var(--dm);" id="jn_lbl_or_create">&#8212; or create new &#8212;</div>
-      <div class="jn-field"><label id="jn_lbl_new_client_name">New Client Name</label><input type="text" id="jn_save_new_client" placeholder="e.g. Sarah, Personal Readings&#8230;" id="jn_inp_save_new_client"></div>
+      <div class="jn-field"><label id="jn_lbl_new_client_name">New Client Name</label><input type="text" id="jn_save_new_client" placeholder="e.g. Sarah, Personal Readings&#8230;"></div>
       <div class="jn-divider"></div>
-      <div class="jn-field"><label id="jn_lbl_q_optional">Question / Intention (optional)</label><input type="text" id="jn_save_question" placeholder="What was the focus of this reading?" id="jn_inp_save_question"></div>
-      <div class="jn-field"><label id="jn_lbl_notes_optional">Initial Notes (optional)</label><textarea id="jn_save_notes" placeholder="First impressions, key insights&#8230;" id="jn_inp_save_notes"></textarea></div>
-      <div class="jn-field"><label id="jn_lbl_tags_optional">Tags (optional, comma-separated)</label><input type="text" id="jn_save_tags" placeholder="love, career, guidance&#8230;" id="jn_inp_save_tags"></div>
+      <div class="jn-field"><label id="jn_lbl_q_optional">Question / Intention (optional)</label><input type="text" id="jn_save_question" placeholder="What was the focus of this reading?"></div>
+      <div class="jn-field"><label id="jn_lbl_notes_optional">Initial Notes (optional)</label><textarea id="jn_save_notes" placeholder="First impressions, key insights&#8230;"></textarea></div>
+      <div class="jn-field"><label id="jn_lbl_tags_optional">Tags (optional, comma-separated)</label><input type="text" id="jn_save_tags" placeholder="love, career, guidance&#8230;"></div>
       <div class="jn-modal-footer">
         <button class="btn-sm btn-danger" onclick="jnCloseSaveModal()" id="jn_btn_modal_cancel">Cancel</button>
         <button class="btn-sm btn-success" onclick="jnDoSaveReading()" id="jn_btn_modal_save">&#10003; Save Reading</button>
@@ -610,6 +610,10 @@ en:{
   jn_spread_celtic:"Celtic Cross",jn_spread_horseshoe:"Horseshoe",
   jn_spread_love:"Relationship Spread",jn_spread_year:"Year Ahead",jn_spread_custom:"Custom Pull",
   jn_dash_title:"📖 Tarot Journal",
+   jn_clients_lbl:"Clients",jn_new_client_btn:"+ New",
+   jn_new_client_notes_ph:"Notes (optional)…",jn_new_reading_btn:"+ New Reading",
+   jn_no_readings_client:"No readings for {name} yet.",jn_no_readings:"No readings found.",
+   jn_stat_cards:"Cards",jn_stat_last_edited:"Last Edited",jn_more:"more",
   jn_export_btn:"↓ Export Journal",
   jn_import_btn:"↑ Import Journal",
   jn_all_clients:"All Clients",
@@ -708,6 +712,10 @@ ru:{
   jn_spread_celtic:"Кельтский крест",jn_spread_horseshoe:"Подкова",
   jn_spread_love:"Расклад на отношения",jn_spread_year:"Год вперёд",jn_spread_custom:"Произвольный расклад",
   jn_dash_title:"📖 Таро-журнал",
+   jn_clients_lbl:"Клиенты",jn_new_client_btn:"+ Новый",
+   jn_new_client_notes_ph:"Заметки (необязательно)…",jn_new_reading_btn:"+ Новый расклад",
+   jn_no_readings_client:"У клиента «{name}» пока нет раскладов.",jn_no_readings:"Расклады не найдены.",
+   jn_stat_cards:"Карты",jn_stat_last_edited:"Последнее изменение",jn_more:"ещё",
   jn_export_btn:"↓ Экспорт журнала",
   jn_import_btn:"↑ Импорт журнала",
   jn_all_clients:"Все клиенты",
@@ -767,14 +775,16 @@ function tx(k){return TR[lang][k]||TR.en[k]||k;}
 var SBG={null:"#1e1545",Wands:"#3d1a00",Cups:"#001a3d",Swords:"#1a1a2e",Pentacles:"#001a00"};
 var SFG={null:"#c9a84c",Wands:"#e07020",Cups:"#2060c0",Swords:"#8080c0",Pentacles:"#208020"};
 function FB(card,w,h){var s=card.suit_en||null,bg=SBG[s]||"#1e1545",fg=SFG[s]||"#c9a84c";var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+w+' '+h+'"><rect width="'+w+'" height="'+h+'" rx="8" fill="'+bg+'"/><rect x="4" y="4" width="'+(w-8)+'" height="'+(h-8)+'" rx="6" fill="none" stroke="'+fg+'" stroke-width="1.2" opacity="0.5"/><text x="'+(w/2)+'" y="22" text-anchor="middle" font-family="serif" font-size="11" fill="'+fg+'" opacity="0.8">'+(card.number||'')+'</text><text x="'+(w/2)+'" y="'+(h/2+16)+'" text-anchor="middle" font-size="'+(w*0.3)+'" dominant-baseline="middle">'+(card.symbol||'\u2605')+'</text><text x="'+(w/2)+'" y="'+(h-14)+'" text-anchor="middle" font-family="serif" font-size="8" fill="'+fg+'" opacity="0.6" font-style="italic">'+(card.arcana_en||'Custom')+'</text></svg>';return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);}
-function setLang(l){lang=l;G("bEN").classList.toggle("on",l==="en");G("bRU").classList.toggle("on",l==="ru");applyLang();onLC();renderBrowse();renderCustTab();if(reading.length)renderReading();if(ftDeck.length)ftRenderInfo();}
+function setLang(l){lang=l;document.documentElement.lang=l==='ru'?'ru':'en';G("bEN").classList.toggle("on",l==="en");G("bRU").classList.toggle("on",l==="ru");applyLang();onLC();renderBrowse();renderCustTab();if(reading.length)renderReading();if(ftDeck.length)ftRenderInfo();}
 function applyLang(){var t=TR[lang];var ids={T_title:"title",T_sub:"sub",tab_read:"tab1",tab_flip:"tab2",tab_browse:"tab3",tab_cust:"tab4",tab_journal:"tab5",T_ll:"ll",T_lc:"lc",T_ld:"ld",T_lr:"lr",T_btn:"btn",T_emp:"emp",T_kw:"kw",T_up:"up",T_rv:"rv",T_sy:"sy",T_ad:"ad",T_prev:"prev",T_next:"next",T_ftf:"ftf",T_ftshuffle:"ftshuffle",T_ftreset:"ftreset",T_fthint:"fthint",T_ftph:"ftph",T_cust_edit_title:"cust_edit_title",T_cust_edit_hint:"cust_edit_hint",T_cust_new_title:"cust_new_title",T_cust_new_hint:"cust_new_hint",T_cust_add:"cust_add",T_cust_manage_title:"cust_manage_title",T_cust_export:"cust_export",T_cust_import:"cust_import",T_cust_reset:"cust_reset",T_cust_manage_hint:"cust_manage_hint",T_emod_img_hint:"emod_img_hint",T_emod_upload:"emod_upload",T_emod_remove_img:"emod_remove_img",T_emod_symbol:"emod_symbol",T_emod_cancel:"emod_cancel",T_emod_save:"emod_save"};Object.keys(ids).forEach(function(id){var el=G(id);if(el)el.textContent=t[ids[id]]||TR.en[ids[id]]||'';});G("bsq").placeholder=t.sph;setSel("sl",t.lo);setSel("sd",t.do);setSel("sr",t.ro);setSel("bsf",t.fo);setSel("ft_filter",t.fo);var sb=document.querySelector('.jn-save-btn');if(sb)sb.textContent=tx('jn_save_btn');
 // Update journal static elements
 var jnMap={
   jn_dash_title:tx('jn_dash_title'),
   jn_btn_export:tx('jn_export_btn'),
   jn_btn_import:tx('jn_import_btn'),
-  jn_btn_add:tx('jn_add_btn'),
+  jn_btn_add_client:tx('jn_add_btn'),
+  jn_btn_new_client:tx('jn_new_client_btn'),
+  jn_lbl_clients:tx('jn_clients_lbl'),
   jn_btn_back:tx('jn_back_btn'),
   jn_btn_save_notes:tx('jn_save_notes_btn'),
   jn_btn_delete:tx('jn_delete_btn'),
@@ -799,17 +809,17 @@ Object.keys(jnMap).forEach(function(id){var el=G(id);if(el)el.innerHTML=jnMap[id
 // Update placeholders
 var jnPh={
   jn_search:tx('jn_search_ph'),
-  jn_inp_client_name:tx('jn_client_name_ph'),
-  jn_inp_client_notes:tx('jn_client_notes_ph'),
-  jn_inp_save_new_client:tx('jn_new_client_ph'),
-  jn_inp_save_question:tx('jn_q_ph'),
-  jn_inp_save_notes:tx('jn_notes_save_ph'),
-  jn_inp_save_tags:tx('jn_tags_save_ph'),
+  jn_new_client_name:tx('jn_client_name_ph'),
+  jn_new_client_notes:tx('jn_client_notes_ph'),
+  jn_save_new_client:tx('jn_new_client_ph'),
+  jn_save_question:tx('jn_q_ph'),
+  jn_save_notes:tx('jn_notes_save_ph'),
+  jn_save_tags:tx('jn_tags_save_ph'),
   jn_detail_notes:tx('jn_notes_ph'),
   jn_detail_tags:tx('jn_tags_ph')
 };
 Object.keys(jnPh).forEach(function(id){var el=G(id);if(el)el.placeholder=jnPh[id];});
-// Update filter dropdowns
+// Update filter dropdowns (by id and by value for robustness)
 var jnOpts={
   jn_opt_all_clients:tx('jn_all_clients'),
   jn_opt_all_spreads:tx('jn_all_spreads'),
@@ -824,11 +834,29 @@ var jnOpts={
   jn_opt_custom:tx('jn_spread_opt_custom')
 };
 Object.keys(jnOpts).forEach(function(id){var el=G(id);if(el)el.textContent=jnOpts[id];});
-// Re-render journal if open
+// Also set journal spread filter options by value (in case any id is missing)
+var spreadLabels={
+  "":tx('jn_all_spreads'),
+  "single":tx('jn_spread_opt_single'),
+  "three_ppp":tx('jn_spread_opt_ppp'),
+  "three_smc":tx('jn_spread_opt_smc'),
+  "three_mbo":tx('jn_spread_opt_mbo'),
+  "celtic":tx('jn_spread_opt_celtic'),
+  "horseshoe":tx('jn_spread_opt_horseshoe'),
+  "love":tx('jn_spread_opt_love'),
+  "year":tx('jn_spread_opt_year'),
+  "custom":tx('jn_spread_opt_custom')
+};
+var jfs=G('jn_filter_spread');
+if(jfs){Array.from(jfs.options).forEach(function(o){if(spreadLabels[o.value]!==undefined)o.textContent=spreadLabels[o.value];});}
+// Re-render journal if open so dynamic lists use current language
 if(G('pn_journal')&&G('pn_journal').classList.contains('on')){
   if(G('jnp_dash')&&G('jnp_dash').classList.contains('on')){
     if(typeof jnLoadClients==='function')jnLoadClients();
     if(typeof jnSearch==='function')jnSearch();
+  } else if(G('jnp_detail')&&G('jnp_detail').classList.contains('on')){
+    var rid=G('jn_detail_id')&&G('jn_detail_id').value;
+    if(rid&&typeof jnOpenDetail==='function')jnOpenDetail(rid);
   }
 }}
 function setSel(id,map){var s=G(id);if(!s)return;var cur=s.value;Array.from(s.options).forEach(function(o){if(map[o.value]!==undefined)o.textContent=map[o.value];});s.value=cur;}
@@ -893,17 +921,24 @@ function jnShowError(msg){var el=G('jn_error');if(!el)return;el.textContent=msg;
 function jnShowPage(id){['jnp_dash','jnp_detail'].forEach(function(p){var el=G(p);if(el)el.classList.remove('on');});var el=G(id);if(el)el.classList.add('on');}
 function jnToast(msg){showToast(msg);}
 function jnSpreadLabel(type){var k='jn_spread_'+type;return tx(k)!==k?tx(k):(type||'');}
+function jnLocalizedPosition(card,index,spreadType){
+ if(lang!=='ru')return card.position||'';
+ var positions=TR.ru.lp[spreadType];
+ if(positions&&positions[index])return positions[index];
+ if(spreadType==='custom')return 'Карта '+(index+1);
+ return card.position||'';
+}
 function jnOnTabOpen(){jnInitDB(function(err){if(err)return;jnShowDash();});}
 function jnShowDash(){jnShowPage('jnp_dash');jnLoadClients();jnLoadReadingsArea(null);}
 function jnShowNewClientForm(){var f=G('jn_new_client_form');if(f)f.style.display=f.style.display==='none'?'block':'none';var inp=G('jn_new_client_name');if(inp)inp.focus();}
 function jnCreateClient(){var nameEl=G('jn_new_client_name'),notesEl=G('jn_new_client_notes');var name=nameEl?nameEl.value.trim():'';if(!name){jnShowError(tx('jn_err_name'));return;}var client={id:jnId(),name:name,notes:notesEl?notesEl.value.trim():'',createdAt:new Date().toISOString()};jnPut('clients',client,function(err){if(err){jnShowError(tx('jn_err_save_client').replace('{msg}',err.message));return;}if(nameEl)nameEl.value='';if(notesEl)notesEl.value='';var f=G('jn_new_client_form');if(f)f.style.display='none';jnLoadClients();jnSelectClient(client.id);});}
-function jnLoadClients(){jnGetAll('clients',function(err,clients){if(err){jnShowError(tx('jn_err_clients'));return;}clients.sort(function(a,b){return a.name.localeCompare(b.name);});jnAllClients=clients;var el=G('jn_client_list');if(!el)return;if(!clients.length){el.innerHTML="<div class='jn-empty'><div class='jn-es'>&#128100;</div><p>No clients yet.<br>Add one to get started.</p></div>";jnRefreshDropdowns(clients);return;}jnGetAll('readings',function(err2,readings){jnAllReadings=readings||[];var counts={};jnAllReadings.forEach(function(r){counts[r.clientId]=(counts[r.clientId]||0)+1;});el.innerHTML=clients.map(function(c){var init=c.name.charAt(0).toUpperCase();var cnt=counts[c.id]||0;var isOn=c.id===jnSelectedClientId?' on':'';var cntLabel=cnt===1?tx('jn_readings_1').replace('{n}',cnt):tx('jn_readings_n').replace('{n}',cnt);return "<div class='jn-client-item"+isOn+"' onclick='jnSelectClient(\""+e(c.id)+"\")'><div class='jn-client-avatar'>"+e(init)+"</div><div class='jn-client-info'><div class='jn-client-name'>"+e(c.name)+"</div><div class='jn-client-count'>"+e(cntLabel)+"</div></div></div>";}).join('');jnRefreshDropdowns(clients);});});}
-function jnRefreshDropdowns(clients){var sel=G('jn_save_client');if(sel){var cur=sel.value;sel.innerHTML="<option value=''>&#8212; Select or create below &#8212;</option>"+clients.map(function(c){return "<option value='"+e(c.id)+"'>"+e(c.name)+"</option>";}).join('');sel.value=cur;}var fc=G('jn_filter_client');if(fc){var cur2=fc.value;fc.innerHTML="<option value=''>All Clients</option>"+clients.map(function(c){return "<option value='"+e(c.id)+"'>"+e(c.name)+"</option>";}).join('');fc.value=cur2;}}
+function jnLoadClients(){jnGetAll('clients',function(err,clients){if(err){jnShowError(tx('jn_err_clients'));return;}clients.sort(function(a,b){return a.name.localeCompare(b.name);});jnAllClients=clients;var el=G('jn_client_list');if(!el)return;if(!clients.length){el.innerHTML="<div class='jn-empty'><div class='jn-es'>&#128100;</div><p>"+tx('jn_no_clients_txt')+"</p></div>";jnRefreshDropdowns(clients);return;}jnGetAll('readings',function(err2,readings){jnAllReadings=readings||[];var counts={};jnAllReadings.forEach(function(r){counts[r.clientId]=(counts[r.clientId]||0)+1;});el.innerHTML=clients.map(function(c){var init=c.name.charAt(0).toUpperCase();var cnt=counts[c.id]||0;var isOn=c.id===jnSelectedClientId?' on':'';var cntLabel=cnt===1?tx('jn_readings_1').replace('{n}',cnt):tx('jn_readings_n').replace('{n}',cnt);return "<div class='jn-client-item"+isOn+"' onclick='jnSelectClient(\""+e(c.id)+"\")'><div class='jn-client-avatar'>"+e(init)+"</div><div class='jn-client-info'><div class='jn-client-name'>"+e(c.name)+"</div><div class='jn-client-count'>"+e(cntLabel)+"</div></div></div>";}).join('');jnRefreshDropdowns(clients);});});}
+function jnRefreshDropdowns(clients){var sel=G('jn_save_client');if(sel){var cur=sel.value;sel.innerHTML="<option value=''>"+tx('jn_or_create_txt')+"</option>"+clients.map(function(c){return "<option value='"+e(c.id)+"'>"+e(c.name)+"</option>";}).join('');sel.value=cur;}var fc=G('jn_filter_client');if(fc){var cur2=fc.value;fc.innerHTML="<option value=''>"+tx('jn_all_clients')+"</option>"+clients.map(function(c){return "<option value='"+e(c.id)+"'>"+e(c.name)+"</option>";}).join('');fc.value=cur2;}}
 function jnSelectClient(clientId){jnSelectedClientId=clientId;jnLoadClients();jnLoadReadingsArea(clientId);}
 function jnLoadReadingsArea(clientId){jnGetAll('readings',function(err,readings){if(err){jnShowError(tx('jn_err_readings'));return;}jnAllReadings=readings;jnGetAll('clients',function(err2,clients){jnAllClients=clients||[];var filtered=clientId?readings.filter(function(r){return r.clientId===clientId;}):readings;filtered.sort(function(a,b){return b.date.localeCompare(a.date);});jnRenderList(filtered,clientId);});});}
-function jnRenderList(readings,clientId){var el=G('jn_readings_area');if(!el)return;var clientName='';if(clientId){var c=jnAllClients.find(function(x){return x.id===clientId;});if(c)clientName=c.name;}var header='';if(clientId){header="<div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;'><div style='font-family:\"Cinzel\",serif;font-size:.9rem;color:var(--gl);'>"+e(clientName)+"</div><button class='btn-sm btn-success' onclick='jnStartSave(\""+e(clientId)+"\")'>+ New Reading</button></div>";}if(!readings.length){el.innerHTML=header+"<div class='jn-empty'><div class='jn-es'>&#128214;</div><p>"+(clientId?"No readings for "+e(clientName)+" yet.":"No readings found.")+"</p></div>";return;}var html=header+"<div class='jn-reading-list'>";readings.forEach(function(r){var dateStr=r.date?new Date(r.date).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}):'';var spreadLabel=jnSpreadLabel(r.spreadType);var cards=r.cards||[];var chips=cards.slice(0,6).map(function(c){var rev=c.reversed?' rev':'';return "<span class='jn-card-chip"+rev+"'>"+e(c.name)+(c.reversed?' \u2193':'')+"</span>";}).join('');if(cards.length>6)chips+="<span class='jn-card-chip'>+"+(cards.length-6)+" more</span>";var tags=(r.tags||[]).map(function(t){return "<span class='jn-tag'>"+e(t)+"</span>";}).join('');var clientLabel='';if(!clientId){var cl=jnAllClients.find(function(x){return x.id===r.clientId;});if(cl)clientLabel="<span style='font-family:\"Cinzel\",serif;font-size:.62rem;color:var(--gold);'>"+e(cl.name)+"</span> &middot; ";}html+="<div class='jn-reading-card' onclick='jnOpenDetail(\""+e(r.id)+"\")'><div class='jn-reading-header'><div><div class='jn-reading-date'>"+clientLabel+e(dateStr)+"</div>"+(spreadLabel?"<div class='jn-reading-spread'>"+e(spreadLabel)+"</div>":"")+"</div></div>"+(r.question?"<div class='jn-reading-question'>"+e(r.question)+"</div>":"")+"<div class='jn-reading-cards-preview'>"+chips+"</div>"+(tags?"<div class='jn-tags'>"+tags+"</div>":"")+"</div>";});html+="</div>";el.innerHTML=html;}
+function jnRenderList(readings,clientId){var el=G('jn_readings_area');if(!el)return;var clientName='';if(clientId){var c=jnAllClients.find(function(x){return x.id===clientId;});if(c)clientName=c.name;}var header='';if(clientId){header="<div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;'><div style='font-family:\"Cinzel\",serif;font-size:.9rem;color:var(--gl);'>"+e(clientName)+"</div><button class='btn-sm btn-success' onclick='jnStartSave(\""+e(clientId)+"\")'>"+tx('jn_new_reading_btn')+"</button></div>";}if(!readings.length){var emptyText=clientId?tx('jn_no_readings_client').replace('{name}',e(clientName)):tx('jn_no_readings');el.innerHTML=header+"<div class='jn-empty'><div class='jn-es'>&#128214;</div><p>"+emptyText+"</p></div>";return;}var html=header+"<div class='jn-reading-list'>";readings.forEach(function(r){var dateStr=r.date?new Date(r.date).toLocaleDateString(lang==='ru'?'ru-RU':'en-US',{year:'numeric',month:'short',day:'numeric'}):'';var spreadLabel=jnSpreadLabel(r.spreadType);var cards=r.cards||[];var chips=cards.slice(0,6).map(function(c){var rev=c.reversed?' rev':'';return "<span class='jn-card-chip"+rev+"'>"+e(c.name)+(c.reversed?' \u2193':'')+"</span>";}).join('');if(cards.length>6)chips+="<span class='jn-card-chip'>+"+(cards.length-6)+" "+tx('jn_more')+"</span>";var tags=(r.tags||[]).map(function(t){return "<span class='jn-tag'>"+e(t)+"</span>";}).join('');var clientLabel='';if(!clientId){var cl=jnAllClients.find(function(x){return x.id===r.clientId;});if(cl)clientLabel="<span style='font-family:\"Cinzel\",serif;font-size:.62rem;color:var(--gold);'>"+e(cl.name)+"</span> &middot; ";}html+="<div class='jn-reading-card' onclick='jnOpenDetail(\""+e(r.id)+"\")'><div class='jn-reading-header'><div><div class='jn-reading-date'>"+clientLabel+e(dateStr)+"</div>"+(spreadLabel?"<div class='jn-reading-spread'>"+e(spreadLabel)+"</div>":"")+"</div></div>"+(r.question?"<div class='jn-reading-question'>"+e(r.question)+"</div>":"")+"<div class='jn-reading-cards-preview'>"+chips+"</div>"+(tags?"<div class='jn-tags'>"+tags+"</div>":"")+"</div>";});html+="</div>";el.innerHTML=html;}
 function jnSearch(){var q=(G('jn_search')||{value:''}).value.toLowerCase().trim();var cf=(G('jn_filter_client')||{value:''}).value;var sf=(G('jn_filter_spread')||{value:''}).value;jnSelectedClientId=cf||null;jnLoadClients();jnGetAll('readings',function(err,readings){if(err)return;jnAllReadings=readings;var filtered=readings.filter(function(r){if(cf&&r.clientId!==cf)return false;if(sf&&r.spreadType!==sf)return false;if(q){var hay=[r.question||'',r.journalNotes||'',(r.tags||[]).join(' '),(r.cards||[]).map(function(c){return c.name||'';}).join(' ')].join(' ').toLowerCase();if(hay.indexOf(q)<0)return false;}return true;});filtered.sort(function(a,b){return b.date.localeCompare(a.date);});jnRenderList(filtered,cf||null);});}
-function jnOpenDetail(readingId){jnGet('readings',readingId,function(err,r){if(err||!r){jnShowError(tx('jn_err_readings'));return;}jnGet('clients',r.clientId,function(err2,client){var clientName=client?client.name:'';var dateStr=r.date?new Date(r.date).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}):'';G('jn_detail_title').textContent=(clientName?clientName+' \u2014 ':'')+dateStr;G('jn_detail_meta').textContent=jnSpreadLabel(r.spreadType)||'';var cards=r.cards||[];G('jn_detail_stats').innerHTML="<div class='jn-stat'><div class='jn-stat-num'>"+cards.length+"</div><div class='jn-stat-lbl'>Cards</div></div>"+(r.lastEdited?"<div class='jn-stat'><div class='jn-stat-num' style='font-size:.75rem;'>"+new Date(r.lastEdited).toLocaleDateString()+"</div><div class='jn-stat-lbl'>Last Edited</div></div>":'');G('jn_detail_cards').innerHTML=cards.map(function(c){return "<div class='jn-card-detail'>"+(c.position?"<div class='pos'>"+e(c.position)+"</div>":"")+"<div class='name'>"+e(c.name||'')+"</div>"+(c.reversed?"<div class='rev-lbl'>\u2193 "+tx('jn_reversed')+"</div>":"")+"</div>";}).join('');G('jn_detail_question').textContent=r.question||tx('jn_no_question');G('jn_detail_notes').value=r.journalNotes||'';G('jn_detail_tags').value=(r.tags||[]).join(', ');G('jn_detail_id').value=r.id;jnShowPage('jnp_detail');});});}
+function jnOpenDetail(readingId){jnGet('readings',readingId,function(err,r){if(err||!r){jnShowError(tx('jn_err_readings'));return;}jnGet('clients',r.clientId,function(err2,client){var clientName=client?client.name:'';var dateStr=r.date?new Date(r.date).toLocaleDateString(lang==='ru'?'ru-RU':'en-US',{year:'numeric',month:'long',day:'numeric'}):'';G('jn_detail_title').textContent=(clientName?clientName+' \u2014 ':'')+dateStr;G('jn_detail_meta').textContent=jnSpreadLabel(r.spreadType)||'';var cards=r.cards||[];G('jn_detail_stats').innerHTML="<div class='jn-stat'><div class='jn-stat-num'>"+cards.length+"</div><div class='jn-stat-lbl'>"+tx('jn_stat_cards')+"</div></div>"+(r.lastEdited?"<div class='jn-stat'><div class='jn-stat-num' style='font-size:.75rem;'>"+new Date(r.lastEdited).toLocaleDateString(lang==='ru'?'ru-RU':'en-US')+"</div><div class='jn-stat-lbl'>"+tx('jn_stat_last_edited')+"</div></div>":'');G('jn_detail_cards').innerHTML=cards.map(function(c){return "<div class='jn-card-detail'>"+(c.position?"<div class='pos'>"+e(jnLocalizedPosition(c,i,r.spreadType))+"</div>":"")+"<div class='name'>"+e(lang==='ru'?(c.name_ru||c.name||''):(c.name||''))+"</div>"+(c.reversed?"<div class='rev-lbl'>\u2193 "+tx('jn_reversed')+"</div>":"")+"</div>";}).join('');G('jn_detail_question').textContent=r.question||tx('jn_no_question');G('jn_detail_notes').value=r.journalNotes||'';G('jn_detail_tags').value=(r.tags||[]).join(', ');G('jn_detail_id').value=r.id;jnShowPage('jnp_detail');});});}
 function jnSaveDetail(){var id=G('jn_detail_id').value;if(!id)return;jnGet('readings',id,function(err,r){if(err||!r){jnShowError(tx('jn_err_readings'));return;}r.journalNotes=G('jn_detail_notes').value;r.tags=G('jn_detail_tags').value.split(',').map(function(t){return t.trim();}).filter(Boolean);r.lastEdited=new Date().toISOString();jnPut('readings',r,function(err2){if(err2){jnShowError(tx('jn_err_save_notes').replace('{msg}',err2.message));return;}jnToast(tx('jn_notes_saved'));});});}
 function jnDeleteReading(){var id=G('jn_detail_id').value;if(!id)return;if(!confirm(tx('jn_delete_confirm')))return;jnDel('readings',id,function(err){if(err){jnShowError(tx('jn_err_delete'));return;}jnToast(tx('jn_deleted'));jnShowDash();});}
 function jnOpenSaveModal(){jnInitDB(function(err){if(err)return;jnGetAll('clients',function(err2,clients){jnAllClients=clients||[];jnRefreshDropdowns(clients);var qEl=G('jn_save_question');if(qEl)qEl.value='';var nEl=G('jn_save_notes');if(nEl)nEl.value='';var tEl=G('jn_save_tags');if(tEl)tEl.value='';var ncEl=G('jn_save_new_client');if(ncEl)ncEl.value='';G('jn_save_modal').classList.add('on');document.body.style.overflow='hidden';});});}
