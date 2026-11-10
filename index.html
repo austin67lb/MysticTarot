@@ -1034,39 +1034,111 @@ function renderReading(){var lk=G("sl").value,ln=TR[lang].lo[lk]||lk;if(lk==="cu
 function flipC(i){var el=G("rc"+i);if(!el)return;if(!el.classList.contains("fl")){el.classList.add("fl");if(reading[i].reversed)el.classList.add("rv");el.onclick=null;setTimeout(function(){el.onclick=function(){openRM(i);};},720);}else{openRM(i);}}
 function openRM(i){mMode="reading";fillM(reading[i].card,reading[i].reversed,reading[i].position);G("mnav").style.display="none";showM();}
 function ftGetDeck(){var f=G("ft_filter").value,all=getAllCards();if(f==="Major")return all.filter(function(c){return c.arcana_en==="Major";});if(f==="Wands")return all.filter(function(c){return c.suit_en==="Wands";});if(f==="Cups")return all.filter(function(c){return c.suit_en==="Cups";});if(f==="Swords")return all.filter(function(c){return c.suit_en==="Swords";});if(f==="Pentacles")return all.filter(function(c){return c.suit_en==="Pentacles";});if(f==="custom_only")return LS().custom;return all;}
-function ftInit(){if(!ftDeck.length){ftDeck=ftGetDeck();ftIdx=0;}ftFlipped=false;ftRenderCard();ftRenderInfo();}
-function ftFilter(){ftDeck=ftGetDeck();ftIdx=0;ftFlipped=false;G("ft_card").classList.remove("fl");ftRenderCard();ftRenderInfo();}
-function ftShuffle(){ftDeck=ftDeck.slice().sort(function(){return Math.random()-.5;});ftIdx=0;ftFlipped=false;G("ft_card").classList.remove("fl");ftRenderCard();ftRenderInfo();}
-function ftReset(){ftDeck=ftGetDeck();ftIdx=0;ftFlipped=false;G("ft_card").classList.remove("fl");ftRenderCard();ftRenderInfo();}
-var ftNavLock=false;
-function ftNav(d){
-  if(ftNavLock||!ftDeck.length)return;
+function ftClearNavAnim(){
+  if(ftNavTimer){clearTimeout(ftNavTimer);ftNavTimer=null;}
   var el=G("ft_card");
-  function advance(){
+  if(el&&ftNavEndHandler){el.removeEventListener("transitionend",ftNavEndHandler);ftNavEndHandler=null;}
+  ftNavLock=false;
+}
+function ftInit(){
+  ftClearNavAnim();
+  ftNavCooldown=false;
+  if(!ftDeck.length){ftDeck=ftGetDeck();ftIdx=0;}
+  ftFlipped=false;
+  var el=G("ft_card");
+  if(el){el.style.transition="none";el.classList.remove("fl");void el.offsetWidth;el.style.transition="";}
+  ftRenderCard();
+  ftRenderInfo();
+}
+function ftFilter(){
+  ftClearNavAnim();ftNavCooldown=false;
+  ftDeck=ftGetDeck();ftIdx=0;ftFlipped=false;
+  var el=G("ft_card");
+  el.style.transition="none";el.classList.remove("fl");void el.offsetWidth;el.style.transition="";
+  ftRenderCard();ftRenderInfo();
+}
+function ftShuffle(){
+  ftClearNavAnim();ftNavCooldown=false;
+  ftDeck=ftDeck.slice().sort(function(){return Math.random()-.5;});
+  ftIdx=0;ftFlipped=false;
+  var el=G("ft_card");
+  el.style.transition="none";el.classList.remove("fl");void el.offsetWidth;el.style.transition="";
+  ftRenderCard();ftRenderInfo();
+}
+function ftReset(){
+  ftClearNavAnim();ftNavCooldown=false;
+  ftDeck=ftGetDeck();ftIdx=0;ftFlipped=false;
+  var el=G("ft_card");
+  el.style.transition="none";el.classList.remove("fl");void el.offsetWidth;el.style.transition="";
+  ftRenderCard();ftRenderInfo();
+}
+var ftNavLock=false,ftNavTimer=null,ftNavEndHandler=null,ftNavCooldown=false;
+function ftNav(d){
+  /* Ignore while animating, during cooldown, or with an empty deck */
+  if(ftNavLock||ftNavCooldown||!ftDeck.length)return;
+  var el=G("ft_card");
+  if(!el)return;
+
+  function commitAdvance(){
+    ftNavTimer=null;
+    ftNavEndHandler=null;
     ftIdx=(ftIdx+d+ftDeck.length)%ftDeck.length;
     ftFlipped=false;
-    /* Ensure face-down with no transition flash of the new face */
+    /* Update face only while fully face-down — never mid-turn */
     el.style.transition="none";
     el.classList.remove("fl");
     ftRenderCard();
     ftRenderInfo();
-    /* Force reflow then restore transition for the next user flip */
     void el.offsetWidth;
     el.style.transition="";
     ftNavLock=false;
+    /* Short cooldown blocks double-fires, touch ghost clicks, and key-repeat skips */
+    ftNavCooldown=true;
+    setTimeout(function(){ftNavCooldown=false;},300);
   }
+
   if(ftFlipped){
-    /* Unflip the current card first so the next face is never visible during the turn */
+    /* Unflip first; only advance after the transform finishes */
     ftNavLock=true;
     ftFlipped=false;
     el.classList.remove("fl");
     ftRenderInfo();
-    setTimeout(advance,720);
+    var finished=false;
+    function onDone(ev){
+      if(finished)return;
+      if(ev){
+        if(ev.target!==el)return;
+        if(ev.propertyName&&ev.propertyName!=="transform")return;
+      }
+      finished=true;
+      if(ftNavEndHandler){el.removeEventListener("transitionend",ftNavEndHandler);ftNavEndHandler=null;}
+      if(ftNavTimer){clearTimeout(ftNavTimer);ftNavTimer=null;}
+      commitAdvance();
+    }
+    ftNavEndHandler=onDone;
+    el.addEventListener("transitionend",onDone);
+    /* Fallback when transitionend is skipped (reduced-motion, interrupted style, etc.) */
+    ftNavTimer=setTimeout(function(){onDone(null);},900);
   }else{
-    advance();
+    /* Face-down: advance immediately, still protected by cooldown */
+    ftNavLock=true;
+    commitAdvance();
   }
 }
-function ftFlip(){if(!ftFlipped){G("ft_card").classList.add("fl");ftFlipped=true;ftRenderInfo();}else{var c=ftDeck[ftIdx];mMode="browse";fillM(c,false,null);G("mnav").style.display="none";showM();}}
+function ftFlip(){
+  if(ftNavLock||ftNavCooldown||!ftDeck.length)return;
+  if(!ftFlipped){
+    G("ft_card").classList.add("fl");
+    ftFlipped=true;
+    ftRenderInfo();
+  }else{
+    var c=ftDeck[ftIdx];
+    mMode="browse";
+    fillM(c,false,null);
+    G("mnav").style.display="none";
+    showM();
+  }
+}
 function ftRenderCard(){var c=ftDeck[ftIdx];if(!c)return;var fb=FB(c,160,274);var src=(c.id!=null&&imgCache[c.id])?imgCache[c.id]:(c.img||fb);G("ft_img").src=src;G("ft_img").onerror=function(){this.src=fb;};G("ft_cfn").textContent=cn(c);G("ft_ctr").textContent=(ftIdx+1)+" / "+ftDeck.length;}
 function ftRenderInfo(){var c=ftDeck[ftIdx];if(!c){G("ft_info").innerHTML="";return;}if(!ftFlipped){G("ft_info").innerHTML="<div class='ft-placeholder'><div class='es'>"+c.symbol+"</div><p>"+e(tx("ftph"))+"</p></div>";return;}var n=cn(c),arc=lang==="en"?c.arcana_en:c.arcana_ru;var suit=c.suit_en?(lang==="en"?c.suit_en:c.suit_ru):null;var meta=suit?arc+" \u00b7 "+suit+(c.number?" \u00b7 "+c.number:""):arc+(c.number?" \u00b7 "+c.number:"");var kw=lang==="en"?c.kw_en:c.kw_ru;G("ft_info").innerHTML="<div class='ft-name'>"+e(n)+"</div><div class='ft-meta'>"+e(meta)+"</div><div class='ft-kws'>"+((kw||[]).map(function(k){return "<span class='ft-kw'>"+e(k)+"</span>";})).join("")+"</div><div class='ft-sec'><div class='ft-sec-title'>"+e(tx("ftup"))+"</div><p>"+e(lang==="en"?c.upright_en:c.upright_ru)+"</p></div><div class='ft-sec'><div class='ft-sec-title'>"+e(tx("ftrv"))+"</div><p>"+e(lang==="en"?c.reversed_en:c.reversed_ru)+"</p></div><div class='ft-sec'><div class='ft-sec-title'>"+e(tx("ftsy"))+"</div><p>"+e(lang==="en"?c.symbolism_en:c.symbolism_ru)+"</p></div><div class='ft-sec'><div class='ft-sec-title'>"+e(tx("ftad"))+"</div><p>"+e(lang==="en"?c.advice_en:c.advice_ru)+"</p></div>";}
 function renderBrowse(){var q=G("bsq").value.toLowerCase(),f=G("bsf").value,all=getAllCards(),s=LS();bList=all.filter(function(c){var n=(lang==="en"?c.name_en:c.name_ru).toLowerCase();var kw=(lang==="en"?c.kw_en:c.kw_ru).join(" ").toLowerCase();var ms=!q||n.indexOf(q)>=0||kw.indexOf(q)>=0;var mf=f==="all"||(f==="custom_only"&&c._custom)||c.arcana_en===f||c.suit_en===f;return ms&&mf;});var g=G("bgrid");if(!bList.length){g.innerHTML="<div style='grid-column:1/-1;text-align:center;color:var(--dm);font-style:italic;padding:30px'>"+e(tx("none"))+"</div>";return;}g.innerHTML=bList.map(function(c,i){var n=lang==="en"?c.name_en:c.name_ru,fb=FB(c,100,140);var badge="";if(c._custom)badge="<div class='bc-badge'>"+e(tx("custom_badge"))+"</div>";else if(s.edits[c.id]||s.images[c.id])badge="<div class='bc-badge'>"+e(tx("edit_badge"))+"</div>";return "<div class='bc' onclick='openBM("+i+")'><img src='"+c.img+"' alt='"+e(n)+"' loading='lazy' onerror=\"this.src='"+fb+"'\">"+badge+"<div class='bcn'>"+e(n)+"</div></div>";}).join("");}
@@ -1248,7 +1320,20 @@ function closeMBg(ev){if(ev.target===G("moverlay"))closeM();}
 var toastTimer=null;
 function showToast(msg){var t=G("toast");t.textContent=msg;t.classList.add("show");if(toastTimer)clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove("show");},2500);}
 function e(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
-document.addEventListener("keydown",function(ev){if(ev.key==="Escape"){closeM();closeEmod();}if(!G("moverlay").classList.contains("on")&&!G("emod_ov").classList.contains("on")&&G("pn_flip").classList.contains("on")){if(ev.key==="ArrowRight")ftNav(1);if(ev.key==="ArrowLeft")ftNav(-1);if(ev.key===" "||ev.key==="Enter"){ev.preventDefault();ftFlip();}}if(G("moverlay").classList.contains("on")&&mMode==="browse"){if(ev.key==="ArrowRight")bNav(1);if(ev.key==="ArrowLeft")bNav(-1);}});
+document.addEventListener("keydown",function(ev){
+  if(ev.key==="Escape"){closeM();closeEmod();return;}
+  if(G("moverlay").classList.contains("on")&&mMode==="browse"){
+    if(ev.repeat)return;
+    if(ev.key==="ArrowRight"){ev.preventDefault();bNav(1);}
+    if(ev.key==="ArrowLeft"){ev.preventDefault();bNav(-1);}
+    return;
+  }
+  if(!G("moverlay").classList.contains("on")&&!G("emod_ov").classList.contains("on")&&G("pn_flip").classList.contains("on")){
+    if(ev.key==="ArrowRight"){if(ev.repeat)return;ev.preventDefault();ftNav(1);return;}
+    if(ev.key==="ArrowLeft"){if(ev.repeat)return;ev.preventDefault();ftNav(-1);return;}
+    if(ev.key===" "||ev.key==="Enter"){ev.preventDefault();ftFlip();}
+  }
+});
 /* ── JOURNAL MODULE ── */
 var jnDb=null,jnDbReady=false,jnAllClients=[],jnAllReadings=[],jnSelectedClientId=null;
 function jnInitDB(cb){if(jnDbReady){cb(null);return;}if(!window.indexedDB){jnShowError(tx('jn_err_db'));cb(new Error('no idb'));return;}try{var req=indexedDB.open('tarot_journal_db',2);req.onupgradeneeded=function(e){var db=e.target.result;if(!db.objectStoreNames.contains('clients')){var cs=db.createObjectStore('clients',{keyPath:'id'});cs.createIndex('name','name',{unique:false});}if(!db.objectStoreNames.contains('readings')){var rs=db.createObjectStore('readings',{keyPath:'id'});rs.createIndex('clientId','clientId',{unique:false});rs.createIndex('date','date',{unique:false});}if(!db.objectStoreNames.contains('settings'))db.createObjectStore('settings',{keyPath:'key'});if(!db.objectStoreNames.contains('card_images'))db.createObjectStore('card_images',{keyPath:'id'});};req.onsuccess=function(e){jnDb=e.target.result;jnDbReady=true;imgDb=jnDb;imgDbReady=true;cb(null);};req.onerror=function(e){var msg=e.target.error?e.target.error.message:'unknown';jnShowError(tx('jn_err_open').replace('{msg}',msg));cb(e.target.error);};}catch(ex){jnShowError(tx('jn_err_open').replace('{msg}',ex.message));cb(ex);}}
