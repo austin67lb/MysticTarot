@@ -1,7 +1,7 @@
 // Mystic Tarot Service Worker
 // Caches the app shell for offline use
 
-const CACHE_NAME = 'mystic-tarot-v1';
+const CACHE_NAME = 'mystic-tarot-v2';
 
 // Files to cache for offline use (app shell)
 const APP_SHELL = [
