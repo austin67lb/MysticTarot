@@ -2,7 +2,7 @@
   "name": "Mystic Tarot",
   "short_name": "Mystic Tarot",
   "description": "A complete tarot reading app with journal, 78 RWS cards, and full Russian/English support",
-  "start_url": "/",
+  "start_url": "/MysticTarot/",
   "display": "standalone",
   "background_color": "#0d0820",
   "theme_color": "#c9a84c",
@@ -52,5 +52,7 @@
         }
       ]
     }
-  ]
+  ],
+  "scope": "/MysticTarot/",
+  "id": "/MysticTarot/"
 }

@@ -5,9 +5,13 @@ const CACHE_NAME = 'mystic-tarot-v2';
 
 // Files to cache for offline use (app shell)
 const APP_SHELL = [
-  '/',
-  '/index.html',
-  '/manifest.json'
+  '/MysticTarot/',
+  '/MysticTarot/index.html',
+  '/MysticTarot/manifest.json',
+  '/MysticTarot/sw.js',
+  '/MysticTarot/icon-192.png',
+  '/MysticTarot/icon-512.png',
+  '/MysticTarot/apple-touch-icon.png'
 ];
 
 // Install: cache app shell
